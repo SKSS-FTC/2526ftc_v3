@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -26,6 +28,8 @@ public class Camera {
 
 
     public Camera(HardwareMap hardwareMap) {
+        cameraPosition = new Position(DistanceUnit.INCH, 0, 0, 0, 0);
+        cameraOrientation = new YawPitchRollAngles(AngleUnit.DEGREES, 0, -90, 0, 0);
 
         AprilTagProcessor.Builder myAprilTagProcessorBuilder;
         VisionPortal.Builder myVisionPortalBuilder;
@@ -42,6 +46,7 @@ public class Camera {
         myVisionPortalBuilder.addProcessor(myAprilTagProcessor);
         // Create a VisionPortal by calling build.
         myVisionPortal = myVisionPortalBuilder.build();
+
 
         visionEnable = false;
         ID = 0;
