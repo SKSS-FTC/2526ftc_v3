@@ -1,18 +1,13 @@
 package org.firstinspires.ftc.teamcode.OpMode.test;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.security.KeyStore;
 
-@TeleOp(name = "aprilTagTest2",group = "TeleOP")
+@TeleOp(name = "MOMO",group = "TeleOP")
 public class MOMO extends LinearOpMode {
 
     private DcMotor leftUp,rightUp,leftDown,rightDown;
@@ -47,7 +42,6 @@ public class MOMO extends LinearOpMode {
             double x = gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
             double r = gamepad1.right_stick_x;
-            // ... control motors
 
             telemetry.addData("Encoder Value", leftUp.getCurrentPosition());
             telemetry.addData("Encoder Value",rightUp.getCurrentPosition());
@@ -59,10 +53,10 @@ public class MOMO extends LinearOpMode {
             leftDown.setPower(0);
             rightDown.setPower(0);
 
-            leftUp.setPower(x+y-r);
-            rightUp.setPower(-x+y+r);
-            leftDown.setPower(-x+y-r);
-            rightDown.setPower(x+y+r);
+            leftUp.setPower(-x+y-r);
+            rightUp.setPower(-x-y-r);
+            leftDown.setPower(x+y-r);
+            rightDown.setPower(x-y-r);
 
         }
     }
