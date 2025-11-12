@@ -53,12 +53,15 @@ public class absoluteDriveTest1 extends LinearOpMode {
                 imu.resetYaw();
             }
             orientation = imu.getRobotYawPitchRollAngles();
-            currentHeading = orientation.getYaw(AngleUnit.DEGREES);
+            currentHeading = orientation.getYaw(AngleUnit.DEGREES) * -1;
+            if(currentHeading <0){
+                currentHeading += 360;
+            }
             relativeTargetAngle = currentHeading - getStickAngle(gamepad1.left_stick_x, gamepad1.left_stick_y);
             joystickMagnitude = Math.sqrt(Math.pow(gamepad1.left_stick_x,2) + Math.pow(gamepad1.left_stick_y,2)) ;
 
-            outputX = joystickMagnitude * Math.sin(relativeTargetAngle);
-            outputY = joystickMagnitude * Math.cos(relativeTargetAngle);
+            outputX = joystickMagnitude * Math.sin(relativeTargetAngle / 180 * Math.PI) * -1;
+            outputY = joystickMagnitude * Math.cos(relativeTargetAngle / 180 * Math.PI) * -1;
             outputR = gamepad1.right_stick_x;
             leftUp.setPower(0.4 * (-outputX + outputY - outputR));
             rightUp.setPower(0.4 * (-outputX - outputY - outputR));
@@ -67,6 +70,7 @@ public class absoluteDriveTest1 extends LinearOpMode {
             telemetry.addData("output x", outputX);
             telemetry.addData("output y", outputY);
             telemetry.addData("output r", outputR);
+            telemetry.addData("magnitude",joystickMagnitude );
             telemetry.addData("stick angle", getStickAngle(gamepad1.left_stick_x, gamepad1.left_stick_y));
             telemetry.addData("yaw", orientation.getYaw(AngleUnit.DEGREES));
             telemetry.update();
