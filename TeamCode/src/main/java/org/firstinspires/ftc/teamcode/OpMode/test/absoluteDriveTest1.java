@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.opencv.core.Mat;
 
-@TeleOp(name = "MOMO",group = "TeleOP")
+@TeleOp(name = "absoluteDriveTest1",group = "TeleOP")
 public class absoluteDriveTest1 extends LinearOpMode {
 
     private DcMotor leftUp, rightUp, leftDown, rightDown;
