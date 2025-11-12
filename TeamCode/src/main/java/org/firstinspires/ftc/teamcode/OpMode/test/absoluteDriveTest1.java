@@ -88,8 +88,7 @@ public class absoluteDriveTest1 extends LinearOpMode {
             }
         }else if (x == 0){
             return angelCalculation(x,y,90);
-        }
-        else {
+        }else {
             return angelCalculation(x,y,Math.atan(Math.abs(gamepad1.left_stick_y/gamepad1.left_stick_x)) / Math.PI *180);
         }
     }
