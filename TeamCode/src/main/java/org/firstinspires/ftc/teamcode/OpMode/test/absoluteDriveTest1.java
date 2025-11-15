@@ -19,6 +19,7 @@ public class absoluteDriveTest1 extends LinearOpMode {
 
     private IMU imu;
     private double ERROR;
+    private boolean fieldDrive;
     private YawPitchRollAngles orientation;
 
     @Override
@@ -28,6 +29,8 @@ public class absoluteDriveTest1 extends LinearOpMode {
         rightUp = hardwareMap.get(DcMotor.class, "rightUp");
         leftDown = hardwareMap.get(DcMotor.class, "leftDown");
         rightDown = hardwareMap.get(DcMotor.class, "rightDown");
+
+        fieldDrive = true;
 
         leftUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -52,17 +55,28 @@ public class absoluteDriveTest1 extends LinearOpMode {
             if (gamepad1.dpad_up){
                 imu.resetYaw();
             }
+            if (gamepad1.triangle){
+                fieldDrive = true;
+            }else if(gamepad1.cross){
+                fieldDrive = false;
+            }
             orientation = imu.getRobotYawPitchRollAngles();
             currentHeading = orientation.getYaw(AngleUnit.DEGREES) * -1;
             if(currentHeading <0){
                 currentHeading += 360;
             }
-            relativeTargetAngle = getStickAngle(gamepad1.left_stick_x, gamepad1.left_stick_y) - currentHeading;
+            relativeTargetAngle = currentHeading - getStickAngle(gamepad1.left_stick_x, gamepad1.left_stick_y);
             joystickMagnitude = Math.sqrt(Math.pow(gamepad1.left_stick_x,2) + Math.pow(gamepad1.left_stick_y,2)) ;
 
-            outputX = joystickMagnitude * Math.sin(relativeTargetAngle / 180 * Math.PI);
-            outputY = joystickMagnitude * Math.cos(relativeTargetAngle / 180 * Math.PI);
-            outputR = gamepad1.right_stick_x;
+            if (fieldDrive) {
+                outputX = joystickMagnitude * Math.sin(relativeTargetAngle / 180 * Math.PI) * -1;
+                outputY = joystickMagnitude * Math.cos(relativeTargetAngle / 180 * Math.PI) * -1;
+                outputR = gamepad1.right_stick_x;
+            }else{
+                outputX = gamepad1.left_stick_x;
+                outputY = gamepad1.left_stick_y;
+                outputR = gamepad1.right_stick_x;
+            }
             leftUp.setPower(0.4 * (-outputX + outputY - outputR));
             rightUp.setPower(0.4 * (-outputX - outputY - outputR));
             leftDown.setPower(0.4 * (outputX + outputY - outputR));

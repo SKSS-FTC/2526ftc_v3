@@ -16,16 +16,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 public class MOMO extends LinearOpMode {
 
     private DcMotor leftUp, rightUp, leftDown, rightDown;
-    private double x, y, r;
-
-    private IMU imu;
-    private double ERROR;
-    private YawPitchRollAngles orientation;
 
     @Override
     public void runOpMode() {
-        imu = hardwareMap.get(IMU.class, "imu");
-        leftUp = hardwareMap.get(DcMotor.class, "leftU.p");
+        leftUp = hardwareMap.get(DcMotor.class, "leftUp");
         rightUp = hardwareMap.get(DcMotor.class, "rightUp");
         leftDown = hardwareMap.get(DcMotor.class, "leftDown");
         rightDown = hardwareMap.get(DcMotor.class, "rightDown");
@@ -46,8 +40,6 @@ public class MOMO extends LinearOpMode {
         leftUp.setDirection(DcMotorSimple.Direction.FORWARD);
 
         waitForStart();
-        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)));
-        imu.resetYaw();
 
         while (opModeIsActive()) {
 
@@ -60,13 +52,12 @@ public class MOMO extends LinearOpMode {
             telemetry.addData("Encoder Value", leftDown.getCurrentPosition());
             telemetry.addData("Encoder Value", rightDown.getCurrentPosition());
 
-            leftUp.setPower(0.4 * (-x + y - r));
-            rightUp.setPower(0.4 * (-x - y - r));
-            leftDown.setPower(0.4 * (-x - y + r));
-            rightDown.setPower(0.4 * (x - y - r));
-            orientation = imu.getRobotYawPitchRollAngles();
-            telemetry.addData("key", orientation.getYaw(AngleUnit.DEGREES));
-            telemetry.update();
+            leftUp.setPower(0.4 * (x + y - r));
+            rightUp.setPower(0.4 * (x - y - r));
+            leftDown.setPower(0.4 * (-x + y - r));
+            rightDown.setPower(0.4 * (-x - y - r));
         }
     }
 }
+
+//Our Program
