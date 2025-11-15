@@ -57,11 +57,11 @@ public class absoluteDriveTest1 extends LinearOpMode {
             if(currentHeading <0){
                 currentHeading += 360;
             }
-            relativeTargetAngle = currentHeading - getStickAngle(gamepad1.left_stick_x, gamepad1.left_stick_y);
+            relativeTargetAngle = getStickAngle(gamepad1.left_stick_x, gamepad1.left_stick_y) - currentHeading;
             joystickMagnitude = Math.sqrt(Math.pow(gamepad1.left_stick_x,2) + Math.pow(gamepad1.left_stick_y,2)) ;
 
-            outputX = joystickMagnitude * Math.sin(relativeTargetAngle / 180 * Math.PI) * -1;
-            outputY = joystickMagnitude * Math.cos(relativeTargetAngle / 180 * Math.PI) * -1;
+            outputX = joystickMagnitude * Math.sin(relativeTargetAngle / 180 * Math.PI);
+            outputY = joystickMagnitude * Math.cos(relativeTargetAngle / 180 * Math.PI);
             outputR = gamepad1.right_stick_x;
             leftUp.setPower(0.4 * (-outputX + outputY - outputR));
             rightUp.setPower(0.4 * (-outputX - outputY - outputR));
