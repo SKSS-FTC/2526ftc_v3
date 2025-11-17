@@ -70,7 +70,7 @@ public class absoluteDriveTest1 extends LinearOpMode {
 
             if (fieldDrive) {
                 outputX = joystickMagnitude * Math.sin(relativeTargetAngle / 180 * Math.PI) * -1;
-                outputY = joystickMagnitude * Math.cos(relativeTargetAngle / 180 * Math.PI) * -1;
+                outputY = joystickMagnitude * Math.cos(relativeTargetAngle / 180 * Math.PI);
                 outputR = gamepad1.right_stick_x;
             }else{
                 outputX = gamepad1.left_stick_x;
@@ -111,21 +111,21 @@ public class absoluteDriveTest1 extends LinearOpMode {
         if (x >0){
             if (y >0){
                 //quadrant 1
-                return 90 + inputAngle;
+                return 90 - inputAngle;
             }else{
                 //quadrant 4
-                return 90 - inputAngle;
+                return 90 + inputAngle;
             }
         }else{
             if (y >0){
                 //quadrant 2
-                return 270 - inputAngle;
+                return 270 + inputAngle;
             }else{
                 //quadrant 3
                 if (inputAngle == 90){
                     return 0;
                 }else {
-                    return 270 + inputAngle;
+                    return 270 - inputAngle;
                 }
             }
         }
