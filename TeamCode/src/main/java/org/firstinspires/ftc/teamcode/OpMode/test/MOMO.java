@@ -1,21 +1,17 @@
 package org.firstinspires.ftc.teamcode.OpMode.test;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "MOMO",group = "TeleOP")
 public class MOMO extends LinearOpMode {
-
-    private DcMotor leftUp, rightUp, leftDown, rightDown;
-    private ElapsedTime timer = new ElapsedTime();
-    private double x, y, r;
-    private boolean playerDrive = true;
+    private DcMotor leftUp, rightUp, leftDown, rightDown = null;
 
     @Override
     public void runOpMode() {
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
         leftUp = hardwareMap.get(DcMotor.class, "leftUp");
         rightUp = hardwareMap.get(DcMotor.class, "rightUp");
         leftDown = hardwareMap.get(DcMotor.class, "leftDown");
@@ -24,30 +20,26 @@ public class MOMO extends LinearOpMode {
 
         waitForStart();
 
-        if (isStopRequested()) {
-            return;
-        }
-        moveForwardTime(2);
-        StrafeTime(2);
-    }
+        leftUp.setDirection(DcMotor.Direction.REVERSE);
+        rightUp.setDirection(DcMotor.Direction.FORWARD);
+        leftDown.setDirection(DcMotor.Direction.REVERSE);
+        rightDown.setDirection(DcMotor.Direction.FORWARD);
 
-    public void moveForwardTime(double time) {
-        timer.reset();
-        while (timer.time() < time) {
-            leftUp.setPower(1);
-            rightUp.setPower(1);
-            leftDown.setPower(1);
-            rightDown.setPower(1);
-        }
-    }
 
-    public void StrafeTime(double time) {
-        timer.reset();
-        while (timer.time() < time) {
-            leftUp.setPower(1);
-            rightUp.setPower(-1);
-            leftDown.setPower(1);
-            rightDown.setPower(-1);
+        waitForStart();
+
+        leftUp.setPower(0.5);
+        leftDown.setPower(0.5);
+        rightUp.setPower(0.5);
+        rightDown.setPower(0.5);
+        sleep(3000);
+
+        leftUp.setPower(0);
+        leftDown.setPower(0);
+        rightUp.setPower(0);
+        rightDown.setPower(0);
+
+        telemetry.addData("Status", "Run Complete");
+        telemetry.update();
         }
     }
-}
