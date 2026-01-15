@@ -16,6 +16,8 @@ public class RobotConstants {
     public static double[] redAprilTag = {129, 127.8};
     public static double[] blueShootingTarget = {12, 138};
     public static double[] blueAprilTag = {15, 127.8};
+    public static double cameraDistance = 2;// in inch
+    public static double shooterDistance = 2;// in inch
 
 
     /** Variables are positions for the claw servos. **/
