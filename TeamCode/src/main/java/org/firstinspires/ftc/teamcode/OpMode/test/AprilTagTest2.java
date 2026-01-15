@@ -11,7 +11,7 @@ public class AprilTagTest2 extends LinearOpMode {
 
     public void runOpMode(){
         camera = new Camera(hardwareMap);
-        camera.enableCamera();
+        camera.setCamera(true);
         waitForStart();
         while(opModeIsActive()){
             camera.update();

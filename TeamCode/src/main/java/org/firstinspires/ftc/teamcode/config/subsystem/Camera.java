@@ -52,14 +52,14 @@ public class Camera {
         ID = 0;
     }
 
-    public void disableCamera(){
-        myVisionPortal.stopStreaming();
-        visionEnable = false;
-    }
-
-    public void enableCamera(){
-        myVisionPortal.resumeStreaming();
-        visionEnable = true;
+    public void setCamera(boolean state){
+        if (state){
+            myVisionPortal.resumeStreaming();
+            visionEnable = true;
+        }else {
+            myVisionPortal.stopStreaming();
+            visionEnable = false;
+        }
     }
 
     public boolean isCameraEnable(){
