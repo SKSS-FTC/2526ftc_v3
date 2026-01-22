@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.OpMode.test;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "MOMO",group = "TeleOP")
+@TeleOp(name = "MOMO",group = "TeleOP")
 public class MOMO extends LinearOpMode {
-    private DcMotor leftUp, rightUp, leftDown, rightDown = null;
+    private DcMotor leftUp, rightUp, leftDown, rightDown, Intake, Shoot;
+    private double x, y, r, L, R;
+
 
     @Override
     public void runOpMode() {
@@ -16,36 +18,39 @@ public class MOMO extends LinearOpMode {
         rightUp = hardwareMap.get(DcMotor.class, "rightUp");
         leftDown = hardwareMap.get(DcMotor.class, "leftDown");
         rightDown = hardwareMap.get(DcMotor.class, "rightDown");
-
+        Intake = hardwareMap.get(DcMotor.class, "Intake");
+        Shoot = hardwareMap.get(DcMotor.class, "Shoot");
 
         waitForStart();
 
+        leftUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Shoot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftUp.setDirection(DcMotor.Direction.REVERSE);
         rightUp.setDirection(DcMotor.Direction.FORWARD);
         leftDown.setDirection(DcMotor.Direction.REVERSE);
         rightDown.setDirection(DcMotor.Direction.FORWARD);
 
 
-        waitForStart();
+        while (opModeIsActive()) {
+            double x = gamepad1.left_stick_x;
+            double y = gamepad1.left_stick_y;
+            double r = gamepad1.right_stick_x;
+            float L = gamepad1.left_trigger;
+            float R = gamepad2.right_trigger;
 
-        leftUp.setPower(0.5);
-        leftDown.setPower(0.5);
-        rightUp.setPower(0.5);
-        rightDown.setPower(0.5);
-        sleep(3000);
+           leftUp.setPower( x + y + r ) ;
+           rightUp.setPower( x - y + r ) ;
+           leftDown.setPower( x + y - r ) ;
+           rightDown.setPower( x - y - r ) ;
+           Intake.setPower(L);
+           Shoot.setPower(R);
 
-        leftUp.setPower(-0.5);
-        leftDown.setPower(0.5);
-        rightUp.setPower(0.5);
-        rightDown.setPower(-0.5);
-        sleep(3000);
-
-        leftUp.setPower(0);
-        leftDown.setPower(0);
-        rightUp.setPower(0);
-        rightDown.setPower(0);
-
-        telemetry.addData("Status", "Run Complete");
         telemetry.update();
+
         }
     }
+}
