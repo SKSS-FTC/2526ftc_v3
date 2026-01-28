@@ -50,7 +50,6 @@ public class MOMO extends LinearOpMode {
            Shoot.setPower(R);
 
         telemetry.update();
-
         }
     }
 }
