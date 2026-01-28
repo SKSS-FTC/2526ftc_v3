@@ -1,0 +1,88 @@
+package org.firstinspires.ftc.teamcode.OpMode.test;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+@TeleOp(name = "outreach", group = "OpMode.test")
+public class outreach extends LinearOpMode {
+    private DcMotor leftUp, rightUp, leftDown, rightDown, shootLeft, shootRight = null;
+    private Servo servo = null;
+    private ElapsedTime timer = new ElapsedTime();
+    private double x, y, r;
+    private boolean playerDrive = true;
+
+    @Override
+    public void runOpMode() {
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
+        leftUp = hardwareMap.get(DcMotor.class, "leftUp");
+        rightUp = hardwareMap.get(DcMotor.class, "rightUp");
+        leftDown = hardwareMap.get(DcMotor.class, "leftDown");
+        rightDown = hardwareMap.get(DcMotor.class, "rightDown");
+        shootLeft = hardwareMap.get(DcMotor.class, "shootLeft");
+        shootRight = hardwareMap.get(DcMotor.class, "shootRight");
+        servo = hardwareMap.get(Servo.class, "servo");
+
+
+        leftUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shootLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shootRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        rightUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shootLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shootRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        servo.setPosition(0.97);
+
+        leftUp.setDirection(DcMotor.Direction.REVERSE);
+        rightUp.setDirection(DcMotor.Direction.FORWARD);
+        leftDown.setDirection(DcMotor.Direction.REVERSE);
+        rightDown.setDirection(DcMotor.Direction.FORWARD);
+        shootLeft.setDirection(DcMotor.Direction.REVERSE);
+        shootRight.setDirection(DcMotor.Direction.FORWARD);
+        servo.setDirection(Servo.Direction.FORWARD);
+
+        servo.setPosition(0.97);
+        shootRight.setPower(0);
+        shootLeft.setPower(0);
+
+        waitForStart();
+
+        while (opModeIsActive()) {
+            double x = gamepad1.left_stick_x;
+            double y = gamepad1.left_stick_y;
+            double r = gamepad1.right_stick_x;
+
+
+            if (gamepad1.right_bumper) {
+                shootLeft.setPower(0.5);
+                shootRight.setPower(0.5);
+                sleep(500);
+                servo.setPosition(0.7);
+                sleep(500);
+                servo.setPosition(0.97);
+                sleep(200);
+                shootLeft.setPower(0);
+                shootRight.setPower(0);
+            }
+
+            if (isStopRequested()) {
+                return;
+            }
+
+            rightUp.setPower(0.4 * (x - y - r));
+            leftDown.setPower(0.4 * (-x + y - r));
+            leftUp.setPower(0.4 * (x + y - r));
+            rightDown.setPower(0.4 * (-x - y - r));
+        }
+    }
+}
