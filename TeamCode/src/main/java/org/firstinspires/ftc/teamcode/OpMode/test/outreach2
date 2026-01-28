@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.OpMode.test;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 @TeleOp(name = "outreach", group = "OpMode.test")
 public class outreach extends LinearOpMode {
     private DcMotor leftUp, rightUp, leftDown, rightDown, shootLeft, shootRight = null;
@@ -34,15 +33,27 @@ public class outreach extends LinearOpMode {
         rightDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shootLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shootRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        servo.setPosition(0.0);
+
+        rightUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shootLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shootRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        servo.setPosition(0.97);
 
         leftUp.setDirection(DcMotor.Direction.REVERSE);
         rightUp.setDirection(DcMotor.Direction.FORWARD);
         leftDown.setDirection(DcMotor.Direction.REVERSE);
         rightDown.setDirection(DcMotor.Direction.FORWARD);
-        shootLeft.setDirection(DcMotor.Direction.FORWARD);
+        shootLeft.setDirection(DcMotor.Direction.REVERSE);
         shootRight.setDirection(DcMotor.Direction.FORWARD);
         servo.setDirection(Servo.Direction.FORWARD);
+
+        servo.setPosition(0.97);
+        shootRight.setPower(0);
+        shootLeft.setPower(0);
 
         waitForStart();
 
@@ -50,22 +61,18 @@ public class outreach extends LinearOpMode {
             double x = gamepad1.left_stick_x;
             double y = gamepad1.left_stick_y;
             double r = gamepad1.right_stick_x;
-            boolean shoot = gamepad1.right_bumper;
-            boolean ROshoot = gamepad1.left_bumper;
 
-            if (shoot) {
-                shootLeft.setPower(10);
-                shootRight.setPower(-10);
-            } else {
+
+            if (gamepad1.right_bumper) {
+                shootLeft.setPower(0.5);
+                shootRight.setPower(0.5);
+                sleep(500);
+                servo.setPosition(0.7);
+                sleep(500);
+                servo.setPosition(0.97);
+                sleep(200);
                 shootLeft.setPower(0);
                 shootRight.setPower(0);
-            }
-
-            if (ROshoot) {
-                servo.setPosition(0.3);
-
-            } else {
-                servo.setPosition(0.0);
             }
 
             if (isStopRequested()) {
