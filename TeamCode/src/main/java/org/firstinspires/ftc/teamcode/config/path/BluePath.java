@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.config.path;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.Path;
@@ -57,7 +58,8 @@ public class BluePath {
                 .setLinearHeadingInterpolation(PickUp1_final.getHeading(), ShootPose.getHeading())
                 .build();
         ready2 = follower.pathBuilder()
-                .addPath(new BezierLine(ShootPose, PickUp2_start))
+                .addPath(new BezierCurve(ShootPose,PickUp2_start,PickUp2_final))
+//                .addPath(new BezierLine(ShootPose, PickUp2_start))
                 .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp2_start.getHeading())
                 .build();
         grab2 = follower.pathBuilder()
