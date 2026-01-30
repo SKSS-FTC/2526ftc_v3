@@ -30,7 +30,7 @@ public class BluePath {
 //    private final Pose PickUp2_final = new Pose(18.05766062602966,59.258649093904445,180);//From Down to UP
 //    private final Pose PickUp3_start = new Pose(43.24052718286654,83.84184514003294,180);//From Down to Up
 //    private final Pose PickUp3_final = new Pose(16.051070840197696,83.60461285008238,180);//From Down to Up
-    public PathChain scorePreload, ready1, grab1, score1, ready2, grab2, score2, ready3, grab3, score3, EndPath;
+    public PathChain scorePreload, Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3, EndPath;
     public Follower follower;
 
     public void init(HardwareMap hardwareMap){
@@ -44,43 +44,30 @@ public class BluePath {
                 .addPath(new BezierLine(StartPose, ShootPose))
                 .setLinearHeadingInterpolation(StartPose.getHeading(), ShootPose.getHeading())
                 .build();
-        ready1 = follower.pathBuilder()
-                .addPath(new BezierLine(ShootPose, PickUp1_start))
-                .setLinearHeadingInterpolation(ShootPose.getHeading(), ShootPose.getHeading())
-                .build();
-        grab1 = follower.pathBuilder()
-                .addPath(new BezierLine(PickUp1_start, PickUp1_final))
+
+        Get_Ball1 = follower.pathBuilder()
+                .addPath(new BezierCurve(ShootPose, PickUp1_start,PickUp1_final))
                 .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp1_final.getHeading())
                 .build();
-
-        score1 = follower.pathBuilder()
+        Shoot_Ball1 = follower.pathBuilder()
                 .addPath(new BezierLine(PickUp1_final, ShootPose))
                 .setLinearHeadingInterpolation(PickUp1_final.getHeading(), ShootPose.getHeading())
                 .build();
-        ready2 = follower.pathBuilder()
-                .addPath(new BezierCurve(ShootPose,PickUp2_start,PickUp2_final))
-//                .addPath(new BezierLine(ShootPose, PickUp2_start))
-                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp2_start.getHeading())
-                .build();
-        grab2 = follower.pathBuilder()
-                .addPath(new BezierLine(PickUp2_start, PickUp2_final))
-                .setLinearHeadingInterpolation(PickUp2_start.getHeading(), ShootPose.getHeading())
-                .build();
 
-        score2 = follower.pathBuilder()
+        Get_Ball2 = follower.pathBuilder()
+                .addPath(new BezierCurve(ShootPose, PickUp2_start, PickUp2_final))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp2_final.getHeading())
+                .build();
+        Shoot_Ball2 = follower.pathBuilder()
                 .addPath(new BezierLine(PickUp2_final, ShootPose))
                 .setLinearHeadingInterpolation(PickUp2_final.getHeading(), ShootPose.getHeading())
                 .build();
 
-        ready3 = follower.pathBuilder()
-                .addPath(new BezierLine(ShootPose, PickUp3_start))
+        Get_Ball3 = follower.pathBuilder()
+                .addPath(new BezierCurve(ShootPose, PickUp3_start, PickUp3_final))
                 .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp3_start.getHeading())
                 .build();
-        grab3 = follower.pathBuilder()
-                .addPath(new BezierLine(PickUp3_start, PickUp3_final))
-                .setLinearHeadingInterpolation(PickUp3_start.getHeading(), PickUp3_final.getHeading())
-                .build();
-        score3 = follower.pathBuilder()
+        Shoot_Ball3 = follower.pathBuilder()
                 .addPath(new BezierLine(PickUp3_final, ShootPose))
                 .setLinearHeadingInterpolation(PickUp3_final.getHeading(), ShootPose.getHeading())
                 .build();
