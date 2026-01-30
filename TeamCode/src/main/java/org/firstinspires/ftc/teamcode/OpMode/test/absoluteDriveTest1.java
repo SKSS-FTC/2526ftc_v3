@@ -15,7 +15,7 @@ import org.opencv.core.Mat;
 public class absoluteDriveTest1 extends LinearOpMode {
 
     private DcMotor leftUp, rightUp, leftDown, rightDown;
-    private double relativeTargetAngle,joystickMagnitude,outputX,outputY,outputR,currentHeading;
+    private double relativeTargetAngle, joystickMagnitude, outputX, outputY, outputR, currentHeading;
 
     private IMU imu;
     private double ERROR;
@@ -44,35 +44,35 @@ public class absoluteDriveTest1 extends LinearOpMode {
         telemetry.update(); // Display the "Initialized" message
         rightDown.setDirection(DcMotorSimple.Direction.FORWARD);
         rightUp.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftDown.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftDown.setDirection(DcMotorSimple.Direction.REVERSE);
         leftUp.setDirection(DcMotorSimple.Direction.FORWARD);
 
         waitForStart();
-        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD)));
+        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.LEFT, RevHubOrientationOnRobot.UsbFacingDirection.DOWN)));
         imu.resetYaw();
 
         while (opModeIsActive()) {
-            if (gamepad1.dpad_up){
+            if (gamepad1.dpad_up) {
                 imu.resetYaw();
             }
-            if (gamepad1.triangle){
+            if (gamepad1.triangle) {
                 fieldDrive = true;
-            }else if(gamepad1.cross){
+            } else if (gamepad1.cross) {
                 fieldDrive = false;
             }
             orientation = imu.getRobotYawPitchRollAngles();
             currentHeading = orientation.getYaw(AngleUnit.DEGREES) * -1;
-            if(currentHeading <0){
+            if (currentHeading < 0) {
                 currentHeading += 360;
             }
-            relativeTargetAngle = currentHeading - getStickAngle(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            joystickMagnitude = Math.sqrt(Math.pow(gamepad1.left_stick_x,2) + Math.pow(gamepad1.left_stick_y,2)) ;
+            relativeTargetAngle = currentHeading - getStickAngle(-1 * gamepad1.left_stick_x, gamepad1.left_stick_y);
+            joystickMagnitude = Math.sqrt(Math.pow(gamepad1.left_stick_x, 2) + Math.pow(gamepad1.left_stick_y, 2));
 
             if (fieldDrive) {
-                outputX = joystickMagnitude * Math.sin(relativeTargetAngle / 180 * Math.PI) * -1;
+                outputX = joystickMagnitude * Math.sin(relativeTargetAngle / 180 * Math.PI);
                 outputY = joystickMagnitude * Math.cos(relativeTargetAngle / 180 * Math.PI);
                 outputR = gamepad1.right_stick_x;
-            }else{
+            } else {
                 outputX = gamepad1.left_stick_x;
                 outputY = gamepad1.left_stick_y;
                 outputR = gamepad1.right_stick_x;
@@ -84,27 +84,34 @@ public class absoluteDriveTest1 extends LinearOpMode {
             telemetry.addData("output x", outputX);
             telemetry.addData("output y", outputY);
             telemetry.addData("output r", outputR);
-            telemetry.addData("magnitude",joystickMagnitude );
-            telemetry.addData("stick angle", getStickAngle(gamepad1.left_stick_x, gamepad1.left_stick_y));
+            telemetry.addData("magnitude", joystickMagnitude);
+            telemetry.addData("stick x", gamepad1.left_stick_x);
+            telemetry.addData("stick y", -1 *gamepad1.left_stick_y);
+            telemetry.addData("stick angle", getStickAngle( gamepad1.left_stick_x, -1 *gamepad1.left_stick_y));
             telemetry.addData("yaw", orientation.getYaw(AngleUnit.DEGREES));
             telemetry.update();
         }
     }
 
 
-
-    private double getStickAngle(double x, double y){
-        if (y == 0 ){
-            if (x == 0){
+    private double getStickAngle(double x, double y) {
+        if (y == 0) {
+            if (x == 0) {
                 return 0;
-            }else{
-                return angelCalculation(x,y,0);
+            } else if (x < 0) {
+                return 270;
+            } else {
+                return 90;
             }
-        }else if (x == 0){
-            return angelCalculation(x,y,90);
-        }else {
-            return angelCalculation(x,y,Math.atan(Math.abs(gamepad1.left_stick_y/gamepad1.left_stick_x)) / Math.PI *180);
         }
+        if (x == 0) {
+            if (y > 0) {
+                return 0;
+            } else if (y < 0) {
+                return 180;
+            }
+        }
+        return angelCalculation(x, y, Math.abs(Math.atan(gamepad1.left_stick_y / gamepad1.left_stick_x)) / Math.PI * 180);
     }
 
     private double angelCalculation(double x,double y,double inputAngle){
