@@ -41,7 +41,7 @@ public class AutoMove extends LinearOpMode {
             leftDown.setPower(0.5);
             rightDown.setPower(0.5);
 
-            sleep(5000);
+            sleep(7000);
 
             leftUp.setPower(0);
             rightUp.setPower(0);
