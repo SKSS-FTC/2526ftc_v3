@@ -31,41 +31,35 @@ public class AutoPathing extends OpMode {
         scorePreload = new Path(new BezierLine(StartPose, ShootPose));
         scorePreload.setLinearHeadingInterpolation(StartPose.getHeading(), ShootPose.getHeading());
 
-        if (PathGrabShoot1) {
-            grab1 = follower.pathBuilder()
-                    .addPath(new BezierLine(ShootPose, PickUp1))
-                    .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp1.getHeading())
-                    .build();
+        grab1 = follower.pathBuilder()
+                .addPath(new BezierLine(ShootPose, PickUp1))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp1.getHeading())
+                .build();
 
-            score1 = follower.pathBuilder()
-                    .addPath(new BezierLine(PickUp1, ShootPose))
-                    .setLinearHeadingInterpolation(PickUp1.getHeading(), ShootPose.getHeading())
-                    .build();
-        }
+        score1 = follower.pathBuilder()
+                .addPath(new BezierLine(PickUp1, ShootPose))
+                .setLinearHeadingInterpolation(PickUp1.getHeading(), ShootPose.getHeading())
+                .build();
 
-        if (PathGrabShoot2) {
-            grab2 = follower.pathBuilder()
-                    .addPath(new BezierLine(ShootPose, PickUp2))
-                    .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp2.getHeading())
-                    .build();
+        grab2 = follower.pathBuilder()
+                .addPath(new BezierLine(ShootPose, PickUp2))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp2.getHeading())
+                .build();
 
-            score2 = follower.pathBuilder()
-                    .addPath(new BezierLine(PickUp2, ShootPose))
-                    .setLinearHeadingInterpolation(PickUp2.getHeading(), ShootPose.getHeading())
-                    .build();
-        }
+        score2 = follower.pathBuilder()
+                .addPath(new BezierLine(PickUp2, ShootPose))
+                .setLinearHeadingInterpolation(PickUp2.getHeading(), ShootPose.getHeading())
+                .build();
 
-        if (PathGrabShoot3) {
-            grab3 = follower.pathBuilder()
-                    .addPath(new BezierLine(ShootPose, PickUp3))
-                    .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp3.getHeading())
-                    .build();
+        grab3 = follower.pathBuilder()
+                .addPath(new BezierLine(ShootPose, PickUp3))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp3.getHeading())
+                .build();
 
-            score3 = follower.pathBuilder()
-                    .addPath(new BezierLine(PickUp3, ShootPose))
-                    .setLinearHeadingInterpolation(PickUp3.getHeading(), ShootPose.getHeading())
-                    .build();
-        }
+        score3 = follower.pathBuilder()
+                .addPath(new BezierLine(PickUp3, ShootPose))
+                .setLinearHeadingInterpolation(PickUp3.getHeading(), ShootPose.getHeading())
+                .build();
     }
     public void setPathState(int pState) {
         pathState = pState;
