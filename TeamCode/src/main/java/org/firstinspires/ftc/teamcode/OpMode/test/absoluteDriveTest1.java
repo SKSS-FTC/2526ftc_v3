@@ -14,8 +14,8 @@ import org.opencv.core.Mat;
 @TeleOp(name = "absoluteDriveTest1",group = "TeleOP")
 public class absoluteDriveTest1 extends LinearOpMode {
 
-    private DcMotor leftUp, rightUp, leftDown, rightDown;
-    private double relativeTargetAngle, joystickMagnitude, outputX, outputY, outputR, currentHeading;
+    private DcMotor leftUp, rightUp, leftDown, rightDown, intake, shoot;
+    private double relativeTargetAngle, joystickMagnitude, outputX, outputY, outputR, currentHeading, intakeL, shootR;
 
     private IMU imu;
     private double ERROR;
@@ -29,6 +29,8 @@ public class absoluteDriveTest1 extends LinearOpMode {
         rightUp = hardwareMap.get(DcMotor.class, "rightUp");
         leftDown = hardwareMap.get(DcMotor.class, "leftDown");
         rightDown = hardwareMap.get(DcMotor.class, "rightDown");
+        intake = hardwareMap.get(DcMotor.class,"intake");
+        shoot = hardwareMap.get(DcMotor.class,"shoot");
 
         fieldDrive = true;
 
@@ -36,10 +38,15 @@ public class absoluteDriveTest1 extends LinearOpMode {
         rightUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shoot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftUp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightUp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shoot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update(); // Display the "Initialized" message
         rightDown.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -77,13 +84,21 @@ public class absoluteDriveTest1 extends LinearOpMode {
                 outputY = gamepad1.left_stick_y;
                 outputR = gamepad1.right_stick_x;
             }
+
+            intakeL = gamepad1.left_trigger;
+            shootR = gamepad1.right_trigger;
+
             leftUp.setPower(0.4 * (-outputX + outputY - outputR));
             rightUp.setPower(0.4 * (-outputX - outputY - outputR));
             leftDown.setPower(0.4 * (outputX + outputY - outputR));
             rightDown.setPower(0.4 * (outputX - outputY - outputR));
+            intake.setPower(intakeL);
+            shoot.setPower(shootR);
             telemetry.addData("output x", outputX);
             telemetry.addData("output y", outputY);
             telemetry.addData("output r", outputR);
+            telemetry.addData("Intake", intakeL);
+            telemetry.addData("shoot", shootR);
             telemetry.addData("magnitude", joystickMagnitude);
             telemetry.addData("stick x", gamepad1.left_stick_x);
             telemetry.addData("stick y", -1 *gamepad1.left_stick_y);
