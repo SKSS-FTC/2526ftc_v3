@@ -1,20 +1,36 @@
 package org.firstinspires.ftc.teamcode.config.path;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
+import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
+import org.firstinspires.ftc.teamcode.pedroPathing.AutoPathing;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class RedPath {
-    private final Pose StartPose = new Pose(122.6490939044481, 123.36079077429983, 217);
-    private final Pose ShootPose = new Pose(87.06425041186161, 101.06095551894562, 31);
-    private final Pose PickUp1 = new Pose();
-    private final Pose PickUp2 = new Pose();
-    private final Pose PickUp3 = new Pose();
-    public PathChain scorePreload,grab1, score1, grab2, score2, grab3, score3;
+    private final Pose StartPose = new Pose(122, 124.06919275123559, 125);
+//    this is red up starting point
+
+    //    private final Pose StartPose = new Pose(36.37232289950577,9.01153212520594,90);
+//    this is red down starting point
+    private final Pose ShootPose = new Pose(85, 97.67874794069192, 35);
+    private final Pose EndPose = new Pose(91.29654036243821,59.820428336079075,0);
+    private final Pose PickUp1_start = new Pose(103.26029654036246,83.44481054365735,0);//From Up to Down
+    private final Pose PickUp1_final = new Pose(128,83.44481054365735,0);//From Up to Down
+    private final Pose PickUp2_start = new Pose(102.19110378912686,59.22075782537066,0);//From Up to Down
+    private final Pose PickUp2_final = new Pose(129,59.22075782537066,0);//From Up to Down
+    private final Pose PickUp3_start = new Pose(102.56013179571664,35.52553542009881,0);//From Up to Down
+    private final Pose PickUp3_final = new Pose(129,35.52553542009881,0);//From Up to Down
+//    private final Pose PickUp1_start = new Pose(102.56013179571664,35.52553542009881,0);//From Down to Up
+//    private final Pose PickUp1_final = new Pose(129,35.52553542009881,0);//From Down to Up
+//    private final Pose PickUp2_start = new Pose(102.19110378912686,59.22075782537066,0);//From Down to Up
+//    private final Pose PickUp2_final = new Pose(129,59.22075782537066,0);//From Down to UP
+//    private final Pose PickUp3_start = new Pose(103.26029654036246,83.44481054365735,0);//From Down to Up
+//    private final Pose PickUp3_final = new Pose(128,83.44481054365735,0);//From Down to Up
+    public PathChain scorePreload, Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3, EndPath;
     public Follower follower;
 
     public void init(HardwareMap hardwareMap){
@@ -29,34 +45,36 @@ public class RedPath {
                 .setLinearHeadingInterpolation(StartPose.getHeading(), ShootPose.getHeading())
                 .build();
 
-        grab1 = follower.pathBuilder()
-                .addPath(new BezierLine(ShootPose, PickUp1))
-                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp1.getHeading())
+        Get_Ball1 = follower.pathBuilder()
+                .addPath(new BezierCurve(ShootPose, PickUp1_start,PickUp1_final))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp1_final.getHeading())
+                .build();
+        Shoot_Ball1 = follower.pathBuilder()
+                .addPath(new BezierLine(PickUp1_final, ShootPose))
+                .setLinearHeadingInterpolation(PickUp1_final.getHeading(), ShootPose.getHeading())
                 .build();
 
-        score1 = follower.pathBuilder()
-                .addPath(new BezierLine(PickUp1, ShootPose))
-                .setLinearHeadingInterpolation(PickUp1.getHeading(), ShootPose.getHeading())
+        Get_Ball2 = follower.pathBuilder()
+                .addPath(new BezierCurve(ShootPose, PickUp2_start, PickUp2_final))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp2_final.getHeading())
+                .build();
+        Shoot_Ball2 = follower.pathBuilder()
+                .addPath(new BezierLine(PickUp2_final, ShootPose))
+                .setLinearHeadingInterpolation(PickUp2_final.getHeading(), ShootPose.getHeading())
                 .build();
 
-        grab2 = follower.pathBuilder()
-                .addPath(new BezierLine(ShootPose, PickUp2))
-                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp2.getHeading())
+        Get_Ball3 = follower.pathBuilder()
+                .addPath(new BezierCurve(ShootPose, PickUp3_start, PickUp3_final))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp3_start.getHeading())
+                .build();
+        Shoot_Ball3 = follower.pathBuilder()
+                .addPath(new BezierLine(PickUp3_final, ShootPose))
+                .setLinearHeadingInterpolation(PickUp3_final.getHeading(), ShootPose.getHeading())
                 .build();
 
-        score2 = follower.pathBuilder()
-                .addPath(new BezierLine(PickUp2, ShootPose))
-                .setLinearHeadingInterpolation(PickUp2.getHeading(), ShootPose.getHeading())
-                .build();
-
-        grab3 = follower.pathBuilder()
-                .addPath(new BezierLine(ShootPose, PickUp3))
-                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp3.getHeading())
-                .build();
-
-        score3 = follower.pathBuilder()
-                .addPath(new BezierLine(PickUp3, ShootPose))
-                .setLinearHeadingInterpolation(PickUp3.getHeading(), ShootPose.getHeading())
+        EndPath = follower.pathBuilder()
+                .addPath(new BezierLine(ShootPose, EndPose))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), EndPose.getHeading())
                 .build();
     }
 
