@@ -65,7 +65,7 @@ public class RedPath {
 
         Get_Ball3 = follower.pathBuilder()
                 .addPath(new BezierCurve(ShootPose, PickUp3_start, PickUp3_final))
-                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp3_start.getHeading())
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), PickUp3_final.getHeading())
                 .build();
         Shoot_Ball3 = follower.pathBuilder()
                 .addPath(new BezierLine(PickUp3_final, ShootPose))
