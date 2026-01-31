@@ -25,8 +25,8 @@ public class AutoPathing extends OpMode {
     private final Pose PickUp3_start = new Pose();
     private final Pose PickUp3_final = new Pose();
 
-    private Path scorePreload;
-    private PathChain Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3, EndPath;
+    private Path scorePreload, EndPath;
+    private PathChain Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3;
     boolean PathGrabShoot1 = true;
     boolean PathGrabShoot2 = true;
     boolean PathGrabShoot3 = true;
@@ -36,6 +36,9 @@ public class AutoPathing extends OpMode {
     public void buildPaths() {
         scorePreload = new Path(new BezierLine(StartPose, ShootPose));
         scorePreload.setLinearHeadingInterpolation(StartPose.getHeading(), ShootPose.getHeading());
+        EndPath = new Path(new BezierLine(ShootPose, EndPose));
+        EndPath.setLinearHeadingInterpolation(ShootPose.getHeading(), EndPose.getHeading());
+
 
         Get_Ball1 = follower.pathBuilder()
                 .addPath(new BezierCurve(ShootPose, PickUp1_start,PickUp1_final))
@@ -62,11 +65,6 @@ public class AutoPathing extends OpMode {
         Shoot_Ball3 = follower.pathBuilder()
                 .addPath(new BezierLine(PickUp3_final, ShootPose))
                 .setLinearHeadingInterpolation(PickUp3_final.getHeading(), ShootPose.getHeading())
-                .build();
-
-        EndPath = follower.pathBuilder()
-                .addPath(new BezierLine(ShootPose, EndPose))
-                .setLinearHeadingInterpolation(ShootPose.getHeading(), EndPose.getHeading())
                 .build();
     }
     public void setPathState(int pState) {
@@ -97,43 +95,6 @@ public class AutoPathing extends OpMode {
 
     @Override
     public void loop() {
-        //method 1
-        if (PathGrabShoot1){
-            follower.followPath(Get_Ball1);
-            while(follower.isBusy()){
-                follower.update();
-            }
-            follower.followPath(Shoot_Ball1);
-            while(follower.isBusy()){
-                follower.update();
-            }
-        }
-
-        if (PathGrabShoot2){
-            follower.followPath(Get_Ball2);
-            while(follower.isBusy()){
-                follower.update();
-            }
-            follower.followPath(Shoot_Ball2);
-            while(follower.isBusy()){
-                follower.update();
-            }
-        }
-
-        if (PathGrabShoot3){
-            follower.followPath(Get_Ball3);
-            while(follower.isBusy()){
-                follower.update();
-            }
-            follower.followPath(Shoot_Ball3);
-            while(follower.isBusy()){
-                follower.update();
-            }
-        }
-
-        //method 2 using fsm
-        //using this method no need use while loop, so no need to put follower.update() in all loop
-        // it also can run problem outside the fsm, while method cannot, it can only run program inside while loop
         switch (currentPState){
             case none:
                 determinePath(0);
