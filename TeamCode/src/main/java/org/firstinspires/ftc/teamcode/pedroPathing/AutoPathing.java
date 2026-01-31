@@ -24,21 +24,23 @@ public class AutoPathing extends OpMode {
     private final Pose PickUp2_final = new Pose();
     private final Pose PickUp3_start = new Pose();
     private final Pose PickUp3_final = new Pose();
-
-    private Path scorePreload, EndPath;
-    private PathChain Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3;
+    private PathChain scorePreload,EndPath,Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3;
     boolean PathGrabShoot1 = true;
     boolean PathGrabShoot2 = true;
     boolean PathGrabShoot3 = true;
-    private enum pState {none,Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3, finish};
+    boolean OpmodeTimer = false;
+    private enum pState {none,scorePreload,Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3,endPath, finish};
     private pState currentPState = pState.none;
 
     public void buildPaths() {
-        scorePreload = new Path(new BezierLine(StartPose, ShootPose));
-        scorePreload.setLinearHeadingInterpolation(StartPose.getHeading(), ShootPose.getHeading());
-        EndPath = new Path(new BezierLine(ShootPose, EndPose));
-        EndPath.setLinearHeadingInterpolation(ShootPose.getHeading(), EndPose.getHeading());
-
+        scorePreload = follower.pathBuilder()
+                .addPath(new Path(new BezierLine(StartPose, ShootPose)))
+                .setLinearHeadingInterpolation(StartPose.getHeading(), ShootPose.getHeading())
+                .build();
+        EndPath = follower.pathBuilder()
+                .addPath(new Path(new BezierLine(ShootPose, EndPose)))
+                .setLinearHeadingInterpolation(ShootPose.getHeading(), EndPose.getHeading())
+                .build();
 
         Get_Ball1 = follower.pathBuilder()
                 .addPath(new BezierCurve(ShootPose, PickUp1_start,PickUp1_final))
@@ -73,6 +75,10 @@ public class AutoPathing extends OpMode {
     }
 
     private void determinePath(int currentPath){
+        if(opmodeTimer.getElapsedTime()>=25000){
+            //25000ms = 25s
+            currentPState = pState.endPath;
+        }
         if (currentPath == 0){
             if (PathGrabShoot1){
                 currentPState = pState.Get_Ball1;
@@ -95,9 +101,19 @@ public class AutoPathing extends OpMode {
 
     @Override
     public void loop() {
+        if(!OpmodeTimer){
+            opmodeTimer.resetTimer();
+            OpmodeTimer = true;
+        }
         switch (currentPState){
             case none:
-                determinePath(0);
+                currentPState = pState.scorePreload;
+
+            case scorePreload:
+                follower.followPath(scorePreload);
+                if(!follower.isBusy()){
+                    determinePath(0);
+                }
 
             case Get_Ball1:
                 follower.followPath(Get_Ball1);
@@ -133,6 +149,12 @@ public class AutoPathing extends OpMode {
                 follower.followPath(Shoot_Ball3);
                 if(!follower.isBusy()){
                     determinePath(3);
+                }
+
+            case endPath:
+                follower.followPath(EndPath);
+                if(!follower.isBusy()){
+                    currentPState = pState.finish;
                 }
 
             case finish:
