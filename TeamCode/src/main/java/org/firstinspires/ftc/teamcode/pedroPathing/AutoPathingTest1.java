@@ -10,8 +10,8 @@ import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-@Autonomous(name = "AutoPathing")
-public class AutoPathing extends OpMode {
+@Autonomous(name = "AutoPathingTest1")
+public class AutoPathingTest1 extends OpMode {
     private Follower follower;
     private Timer pathTimer, actionTimer, opmodeTimer;
     private int pathState;
@@ -166,7 +166,7 @@ public class AutoPathing extends OpMode {
         follower.update();
 
 
-        telemetry.addData("path state", pathState);
+        telemetry.addData("path state", currentPState);
         telemetry.addData("x", follower.getPose().getX());
         telemetry.addData("y", follower.getPose().getY());
         telemetry.addData("heading", follower.getPose().getHeading());

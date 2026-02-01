@@ -4,10 +4,9 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.teamcode.pedroPathing.AutoPathing;
+
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class RedPath {
@@ -77,9 +76,4 @@ public class RedPath {
                 .setLinearHeadingInterpolation(ShootPose.getHeading(), EndPose.getHeading())
                 .build();
     }
-
-    public void runPath(PathChain pathChain){
-        follower.followPath(pathChain);
-    }
-
 }

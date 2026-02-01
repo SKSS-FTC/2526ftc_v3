@@ -4,10 +4,9 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.teamcode.pedroPathing.AutoPathing;
+
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class BluePath {
@@ -32,6 +31,9 @@ public class BluePath {
 //    private final Pose PickUp3_final = new Pose(16.051070840197696,83.60461285008238,180);//From Down to Up
     public PathChain scorePreload, Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3, EndPath;
     public Follower follower;
+
+    public BluePath() {
+    }
 
     public void init(HardwareMap hardwareMap){
         follower = Constants.createFollower(hardwareMap);
@@ -78,8 +80,5 @@ public class BluePath {
                 .build();
     }
 
-    public void runPath(PathChain pathChain){
-        follower.followPath(pathChain);
-    }
 
 }
