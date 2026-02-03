@@ -16,14 +16,11 @@ import org.firstinspires.ftc.teamcode.config.path.RedPath;
 public class RedShooter {
     private DcMotor rotate,shooter;
     private Servo angleTuner;
-
-    private RedPath redPath;
     private Pose currentPose,relativeShootingVector;
     private double absoluteShooterHeading = 0,relativeShooterHeading = 0;
     public boolean shooterAiming = false;
 
     public RedShooter(HardwareMap hardwareMap){
-        redPath = new RedPath();
 
         rotate = hardwareMap.get(DcMotor.class, "rotate");
         shooter = hardwareMap.get(DcMotor.class,"shooter");

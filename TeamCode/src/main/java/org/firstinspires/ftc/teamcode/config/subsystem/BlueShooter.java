@@ -17,15 +17,11 @@ import java.nio.file.attribute.FileOwnerAttributeView;
 public class BlueShooter {
     private DcMotor rotate,shooter;
     private Servo angleTuner;
-
-    private BluePath bluePath;
     private Pose currentPose,relativeShootingVector;
     private double absoluteShooterHeading = 0,relativeShooterHeading = 0;
     public boolean shooterAiming = false;
 
     public BlueShooter(HardwareMap hardwareMap){
-        bluePath = new BluePath();
-
         rotate = hardwareMap.get(DcMotor.class, "rotate");
         shooter = hardwareMap.get(DcMotor.class,"shooter");
         angleTuner = hardwareMap.get(Servo.class,"angleTuner");
