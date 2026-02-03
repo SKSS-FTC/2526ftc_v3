@@ -6,12 +6,13 @@ package org.firstinspires.ftc.teamcode.config;
  */
 
 
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /** Everything that we want to store globally, for example positions of servos, motors, etc. goes in here. **/
 public class RobotConstants {
     private static HardwareMap hardwareMap;
-    public static double boardAngle = 45;
+    public static double boardAngle = Math.tan((double) 55 /40) / Math.PI * 180;
     public static double[] redShootingTarget = {132, 138};
     public static double[] redAprilTag = {129, 127.8};
     public static double[] blueShootingTarget = {12, 138};
@@ -20,6 +21,7 @@ public class RobotConstants {
     public static double shooterDistance = 2;// in inch
     public static double shooterInitPosition = 0;
     public static double shooterAngleP = 0.01;
+    public static int shooterEncoder = 10000; //
 
 
     /** Variables are positions for the claw servos. **/
