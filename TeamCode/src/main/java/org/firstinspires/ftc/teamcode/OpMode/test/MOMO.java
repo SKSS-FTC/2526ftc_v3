@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.OpMode.test;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "MOMO",group = "TeleOP")
 public class MOMO extends LinearOpMode {
@@ -35,9 +36,9 @@ public class MOMO extends LinearOpMode {
         rightDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Shoot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftUp.setDirection(DcMotor.Direction.REVERSE);
-        rightUp.setDirection(DcMotor.Direction.FORWARD);
-        leftDown.setDirection(DcMotor.Direction.REVERSE);
+        leftUp.setDirection(DcMotor.Direction.FORWARD);
+        rightUp.setDirection(DcMotor.Direction.REVERSE);
+        leftDown.setDirection(DcMotor.Direction.FORWARD);
         rightDown.setDirection(DcMotor.Direction.FORWARD);
 
 
@@ -48,13 +49,12 @@ public class MOMO extends LinearOpMode {
             double L = gamepad1.left_trigger;
             double R = gamepad1.right_trigger;
 
-           leftUp.setPower( x - y + r ) ;
+           leftUp.setPower( - x + y - r ) ;
            rightUp.setPower( -x - y - r ) ;
            leftDown.setPower( x + y - r ) ;
            rightDown.setPower( x - y - r ) ;
            Intake.setPower(L);
            Shoot.setPower(R);
-
         telemetry.update();
         }
     }
