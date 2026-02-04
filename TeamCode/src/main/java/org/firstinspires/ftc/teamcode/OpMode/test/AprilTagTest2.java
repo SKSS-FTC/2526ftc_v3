@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.config.subsystem.Camera;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "aprilTagTest2")
+@TeleOp(name = "AprilTagTest2")
 public class AprilTagTest2 extends LinearOpMode {
     private Camera camera;
 

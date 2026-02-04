@@ -13,11 +13,12 @@ public class coordinateTest1_2 extends LinearOpMode {
     private BluePath bluePath;
     @Override
     public void runOpMode() throws InterruptedException {
-        bluePath = new BluePath();
-        bluePath.init(hardwareMap);
+        bluePath = new BluePath(hardwareMap);
         waitForStart();
         while(opModeIsActive()){
-            telemetry.addData("pose",bluePath.follower.getPose());
+            telemetry.addData("x",bluePath.getX());
+            telemetry.addData("y",bluePath.getY());
+            telemetry.addData("heading",bluePath.getHeading());
             telemetry.update();
         }
     }

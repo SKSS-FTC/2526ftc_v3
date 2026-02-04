@@ -124,8 +124,7 @@ public class AutoPathingTest2 extends OpMode {
     }
     @Override
     public void init() {
-        bluePath = new BluePath();
-        bluePath.init(hardwareMap);
+        bluePath = new BluePath(hardwareMap);
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
     }

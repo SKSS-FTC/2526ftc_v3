@@ -10,19 +10,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class RedPath {
-    private final Pose StartPose = new Pose(122, 124.06919275123559, 125);
+    private final Pose StartPose = new Pose(122, 124.06919275123559, Math.toRadians(125));
 //    this is red up starting point
 
     //    private final Pose StartPose = new Pose(36.37232289950577,9.01153212520594,90);
 //    this is red down starting point
-    private final Pose ShootPose = new Pose(85, 97.67874794069192, 35);
-    private final Pose EndPose = new Pose(91.29654036243821,59.820428336079075,0);
-    private final Pose PickUp1_start = new Pose(103.26029654036246,83.44481054365735,0);//From Up to Down
-    private final Pose PickUp1_final = new Pose(128,83.44481054365735,0);//From Up to Down
-    private final Pose PickUp2_start = new Pose(102.19110378912686,59.22075782537066,0);//From Up to Down
-    private final Pose PickUp2_final = new Pose(129,59.22075782537066,0);//From Up to Down
-    private final Pose PickUp3_start = new Pose(102.56013179571664,35.52553542009881,0);//From Up to Down
-    private final Pose PickUp3_final = new Pose(129,35.52553542009881,0);//From Up to Down
+    private final Pose ShootPose = new Pose(85, 97.67874794069192, Math.toRadians(35));
+    private final Pose EndPose = new Pose(91.29654036243821,59.820428336079075,Math.toRadians(0));
+    private final Pose PickUp1_start = new Pose(103.26029654036246,83.44481054365735,Math.toRadians(0));//From Up to Down
+    private final Pose PickUp1_final = new Pose(128,83.44481054365735,Math.toRadians(0));//From Up to Down
+    private final Pose PickUp2_start = new Pose(102.19110378912686,59.22075782537066,Math.toRadians(0));//From Up to Down
+    private final Pose PickUp2_final = new Pose(129,59.22075782537066,Math.toRadians(0));//From Up to Down
+    private final Pose PickUp3_start = new Pose(102.56013179571664,35.52553542009881,Math.toRadians(0));//From Up to Down
+    private final Pose PickUp3_final = new Pose(129,35.52553542009881, Math.toRadians(0));//From Up to Down
 //    private final Pose PickUp1_start = new Pose(102.56013179571664,35.52553542009881,0);//From Down to Up
 //    private final Pose PickUp1_final = new Pose(129,35.52553542009881,0);//From Down to Up
 //    private final Pose PickUp2_start = new Pose(102.19110378912686,59.22075782537066,0);//From Down to Up
