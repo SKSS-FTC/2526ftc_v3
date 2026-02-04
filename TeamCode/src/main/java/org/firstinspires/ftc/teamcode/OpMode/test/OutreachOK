@@ -1,0 +1,15 @@
+correct
+ rightUp.setPower(0.4 * (-x - y - r));
+leftDown.setPower(0.4 * (x + y - r));
+leftUp.setPower(0.4 * (-x + y - r));
+rightDown.setPower(0.4 * (x - y - r));
+
+rightUp.setPower(0.4 * (-x - y + r));
+leftDown.setPower(0.4 * (x + y - r));
+leftUp.setPower(0.4 * (-x + y + r));
+rightDown.setPower(0.4 * (x - y - r));
+R
+leftUp.setPower(0.4 * (x - y - r));
+leftDown.setPower(0.4 * (-x - y - r));
+rightUp.setPower(0.4 * (-x + y + r));
+rightDown.setPower(0.4 * (x + y + r));
