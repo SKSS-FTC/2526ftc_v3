@@ -45,8 +45,11 @@ public class Constants {
             .leftEncoder_HardwareMapName("rightUp")
             .rightEncoder_HardwareMapName("leftUp")
             .strafeEncoder_HardwareMapName("leftDown")
-            .leftEncoderDirection(Encoder.FORWARD)
+            .leftEncoderDirection(Encoder.REVERSE)
             .rightEncoderDirection(Encoder.FORWARD)
-            .strafeEncoderDirection(Encoder.FORWARD);
+            .strafeEncoderDirection(Encoder.REVERSE);
+//            .forwardTicksToInches()
+//            .strafeTicksToInches()
+//            .turnTicksToInches();
 
 }

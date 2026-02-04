@@ -17,35 +17,55 @@ public class AutoPathingTest2 extends OpMode {
     boolean PathGrabShoot1 = true;
     boolean PathGrabShoot2 = true;
     boolean PathGrabShoot3 = true;
+    boolean PathGrabShoot4 = true;
+    boolean PathGrabShoot5 = true;
+    boolean PathGrabShoot6 = true;
     private BluePath bluePath;
-    private enum pState {none,scorePreload,Get_Ball1, Shoot_Ball1, Get_Ball2, Shoot_Ball2, Get_Ball3, Shoot_Ball3,endPath, finish};
-    private pState currentPState = pState.none;
+    private enum NearPathState {none,NearScorePreload,NearGet_Ball1, NearShoot_Ball1, NearGet_Ball2, NearShoot_Ball2, NearGet_Ball3, NearShoot_Ball3, endPath, finish};
+    private enum FarPathState {none, FarScorePreload, FarGet_Ball1, FarShoot_Ball1, FarGet_Ball2, FarShoot_Ball2, FarGet_Ball3, FarShoot_Ball3, endPath, finish};
+    private NearPathState currentNearPathState = NearPathState.none;
+    private FarPathState currentFarPathState = FarPathState.none;
 
     boolean OpmodeTimer = false;
     private Timer opmodeTimer;
 
-    private void determinePath(int currentPath){
-        if(opmodeTimer.getElapsedTime()>=25000){
+    private void determinePath(int currentPath) {
+        if (opmodeTimer.getElapsedTime() >= 25000) {
             //25000ms = 25s
-            currentPState = pState.endPath;
+            currentNearPathState = NearPathState.endPath;
+            //25000ms = 25s
+            currentFarPathState = FarPathState.endPath;
         }
-        if (currentPath == 0){
-            if (PathGrabShoot1){
-                currentPState = pState.Get_Ball1;
+        if (currentPath == 0) {
+            if (PathGrabShoot1) {
+                currentNearPathState = NearPathState.NearGet_Ball1;
+            }
+            if (PathGrabShoot4) {
+                currentFarPathState = FarPathState.FarGet_Ball1;
             }
         }
-        if (currentPath <= 1){
+        if (currentPath <= 1) {
             //finish path 1
-            if (PathGrabShoot2){
-                currentPState = pState.Get_Ball2;
+            if (PathGrabShoot2) {
+                currentNearPathState = NearPathState.NearGet_Ball2;
+            }
+            if (PathGrabShoot5) {
+                currentFarPathState = FarPathState.FarGet_Ball2;
             }
         }
-        if (currentPath <= 2){
-            if (PathGrabShoot3){
-                currentPState = pState.Get_Ball3;
+        if (currentPath <= 2) {
+            if (PathGrabShoot3) {
+                currentNearPathState = NearPathState.NearShoot_Ball3;
             }
-        }else{
-            currentPState = pState.finish;
+            else {
+                currentNearPathState = NearPathState.finish;
+            }
+            if(PathGrabShoot6) {
+                currentFarPathState = FarPathState.FarShoot_Ball3;
+            }
+            else {
+                currentFarPathState = FarPathState.finish;
+            }
         }
     }
 
@@ -55,48 +75,48 @@ public class AutoPathingTest2 extends OpMode {
             opmodeTimer.resetTimer();
             OpmodeTimer = true;
         }
-        switch (currentPState){
+        switch (currentNearPathState){
             case none:
-                currentPState = pState.scorePreload;
+                currentNearPathState = NearPathState.NearScorePreload;
 
-            case scorePreload:
-                bluePath.follower.followPath(bluePath.scorePreload);
+            case NearScorePreload:
+                bluePath.follower.followPath(bluePath.NearScorePreload);
                 if(!bluePath.follower.isBusy()){
                     determinePath(0);
                 }
 
-            case Get_Ball1:
-                bluePath.follower.followPath(bluePath.Get_Ball1);
+            case NearGet_Ball1:
+                bluePath.follower.followPath(bluePath.NearGet_Ball1);
                 if(!bluePath.follower.isBusy()){
-                    currentPState = pState.Shoot_Ball1;
+                    currentNearPathState = NearPathState.NearShoot_Ball1;
                 }
 
-            case Shoot_Ball1:
-                bluePath.follower.followPath(bluePath.Shoot_Ball1);
+            case NearShoot_Ball1:
+                bluePath.follower.followPath(bluePath.NearShoot_Ball1);
                 if(!bluePath.follower.isBusy()){
                     determinePath(1);
                 }
 
-            case Get_Ball2:
-                bluePath.follower.followPath(bluePath.Get_Ball2);
+            case NearGet_Ball2:
+                bluePath.follower.followPath(bluePath.NearGet_Ball2);
                 if(!bluePath.follower.isBusy()){
-                    currentPState = pState.Shoot_Ball2;
+                    currentNearPathState = NearPathState.NearShoot_Ball2;
                 }
 
-            case Shoot_Ball2:
-                bluePath.follower.followPath(bluePath.Shoot_Ball2);
+            case NearShoot_Ball2:
+                bluePath.follower.followPath(bluePath.NearShoot_Ball2);
                 if(!bluePath.follower.isBusy()){
                     determinePath(2);
                 }
 
-            case Get_Ball3:
-                bluePath.follower.followPath(bluePath.Get_Ball3);
+            case NearGet_Ball3:
+                bluePath.follower.followPath(bluePath.NearGet_Ball3);
                 if(!bluePath.follower.isBusy()){
-                    currentPState = pState.Shoot_Ball3;
+                    currentNearPathState = NearPathState.NearShoot_Ball3;
                 }
 
-            case Shoot_Ball3:
-                bluePath.follower.followPath(bluePath.Shoot_Ball3);
+            case NearShoot_Ball3:
+                bluePath.follower.followPath(bluePath.NearShoot_Ball3);
                 if(!bluePath.follower.isBusy()){
                     determinePath(3);
                 }
@@ -104,19 +124,78 @@ public class AutoPathingTest2 extends OpMode {
             case endPath:
                 bluePath.follower.followPath(bluePath.EndPath);
                 if(!bluePath.follower.isBusy()){
-                    currentPState = pState.finish;
+                    currentNearPathState = NearPathState.finish;
                 }
 
             case finish:
                 if (gamepad1.triangle){
-                    currentPState = pState.none;
+                    currentNearPathState = NearPathState.none;
+                    //restart the path again
+                }
+        }
+        switch(currentFarPathState) {
+            case none:
+                currentNearPathState = NearPathState.NearScorePreload;
+
+            case FarScorePreload:
+                bluePath.follower.followPath(bluePath.NearScorePreload);
+                if(!bluePath.follower.isBusy()){
+                    determinePath(0);
+                }
+
+            case FarGet_Ball1:
+                bluePath.follower.followPath(bluePath.NearGet_Ball1);
+                if(!bluePath.follower.isBusy()){
+                    currentNearPathState = NearPathState.NearShoot_Ball1;
+                }
+
+            case FarShoot_Ball1:
+                bluePath.follower.followPath(bluePath.NearShoot_Ball1);
+                if(!bluePath.follower.isBusy()){
+                    determinePath(1);
+                }
+
+            case FarGet_Ball2:
+                bluePath.follower.followPath(bluePath.NearGet_Ball2);
+                if(!bluePath.follower.isBusy()){
+                    currentNearPathState = NearPathState.NearShoot_Ball2;
+                }
+
+            case FarShoot_Ball2:
+                bluePath.follower.followPath(bluePath.NearShoot_Ball2);
+                if(!bluePath.follower.isBusy()){
+                    determinePath(2);
+                }
+
+            case FarGet_Ball3:
+                bluePath.follower.followPath(bluePath.NearGet_Ball3);
+                if(!bluePath.follower.isBusy()){
+                    currentNearPathState = NearPathState.NearShoot_Ball3;
+                }
+
+            case FarShoot_Ball3:
+                bluePath.follower.followPath(bluePath.NearShoot_Ball3);
+                if(!bluePath.follower.isBusy()){
+                    determinePath(3);
+                }
+
+            case endPath:
+                bluePath.follower.followPath(bluePath.EndPath);
+                if(!bluePath.follower.isBusy()){
+                    currentNearPathState = NearPathState.finish;
+                }
+
+            case finish:
+                if (gamepad1.triangle){
+                    currentNearPathState = NearPathState.none;
                     //restart the path again
                 }
         }
         bluePath.follower.update();
 
 
-        telemetry.addData("path state", currentPState);
+        telemetry.addData("NearPathState", currentNearPathState);
+        telemetry.addData("FarPathState", currentFarPathState);
         telemetry.addData("x", bluePath.follower.getPose().getX());
         telemetry.addData("y", bluePath.follower.getPose().getY());
         telemetry.addData("heading", bluePath.follower.getPose().getHeading());
