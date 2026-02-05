@@ -22,6 +22,7 @@ public class RobotConstants {
     public static double shooterInitPosition = 0;
     public static double shooterAngleP = 0.01;
     public static int shooterEncoder = 10000; //
+    public static Pose currentPose = new Pose(0,0,0);
 
 
     /** Variables are positions for the claw servos. **/

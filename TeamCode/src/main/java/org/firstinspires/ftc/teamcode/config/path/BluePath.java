@@ -7,10 +7,12 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import static org.firstinspires.ftc.teamcode.config.RobotConstants.currentPose;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class BluePath {
+    public static Pose startingPose;
     private final Pose FarStartPose = new Pose(22.138385502471177, 124.06919275123559, Math.toRadians(140));
     private final Pose NearStartPose = new Pose(56.37232289950577,9.01153212520594, Math.toRadians(90));
     private final Pose ShootPose = new Pose(59.24382207578253, 97.67874794069192,  Math.toRadians(140));
@@ -43,6 +45,7 @@ public class BluePath {
     public void setFarStartPose(){
         follower.setStartingPose(FarStartPose);
     }
+    public void setTeleopStartPose(){follower.setStartingPose(currentPose);}
 
     public double getX(){return follower.getPose().getX();}
     public double getY(){return follower.getPose().getY();}
@@ -113,5 +116,9 @@ public class BluePath {
                 .addPath(new BezierLine(ShootPose, EndPose))
                 .setLinearHeadingInterpolation(ShootPose.getHeading(), EndPose.getHeading())
                 .build();
+    }
+    public void update(){
+        follower.update();
+        currentPose = follower.getPose();
     }
 }
