@@ -29,8 +29,8 @@ public class absoluteDriveTest1 extends LinearOpMode {
         rightUp = hardwareMap.get(DcMotor.class, "rightUp");
         leftDown = hardwareMap.get(DcMotor.class, "leftDown");
         rightDown = hardwareMap.get(DcMotor.class, "rightDown");
-        intake = hardwareMap.get(DcMotor.class,"intake");
-        shoot = hardwareMap.get(DcMotor.class,"shoot");
+        intake = hardwareMap.get(DcMotor.class,"Intake");
+        shoot = hardwareMap.get(DcMotor.class,"Shoot");
 
         fieldDrive = true;
 
@@ -49,24 +49,38 @@ public class absoluteDriveTest1 extends LinearOpMode {
 
         telemetry.addData("Status", "Initialized");
         telemetry.update(); // Display the "Initialized" message
+        shoot.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
         rightDown.setDirection(DcMotorSimple.Direction.FORWARD);
         rightUp.setDirection(DcMotorSimple.Direction.FORWARD);
         leftDown.setDirection(DcMotorSimple.Direction.REVERSE);
         leftUp.setDirection(DcMotorSimple.Direction.FORWARD);
 
         waitForStart();
-        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.LEFT, RevHubOrientationOnRobot.UsbFacingDirection.DOWN)));
+        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD, RevHubOrientationOnRobot.UsbFacingDirection.DOWN)));
         imu.resetYaw();
 
         while (opModeIsActive()) {
+            if (gamepad1.left_trigger > 0.7) {
+                shoot.setPower(1);
+            } else {
+                shoot.setPower(0);
+            }
+            if (gamepad1.right_trigger > 0.7) {
+                intake.setPower(1);
+            } else {
+                intake.setPower(0);
+            }
             if (gamepad1.dpad_up) {
                 imu.resetYaw();
             }
+
             if (gamepad1.triangle) {
                 fieldDrive = true;
             } else if (gamepad1.cross) {
                 fieldDrive = false;
             }
+
             orientation = imu.getRobotYawPitchRollAngles();
             currentHeading = orientation.getYaw(AngleUnit.DEGREES) * -1;
             if (currentHeading < 0) {
