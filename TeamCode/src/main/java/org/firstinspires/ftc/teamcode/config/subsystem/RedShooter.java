@@ -23,7 +23,7 @@ public class RedShooter {
     public RedShooter(HardwareMap hardwareMap){
 
         rotate = hardwareMap.get(DcMotor.class, "rotate");
-        shooter = hardwareMap.get(DcMotor.class,"shooter");
+        shooter = hardwareMap.get(DcMotor.class,"shoot");
         angleTuner = hardwareMap.get(Servo.class,"angleTuner");
 
         rotate.setDirection(DcMotorSimple.Direction.FORWARD);

@@ -30,7 +30,7 @@ public class RedPath {
     private final Pose NearPickUp2_final = new Pose(129,59.22075782537066,0);//From Down to UP
     private final Pose NearPickUp3_start = new Pose(103.26029654036246,83.44481054365735,0);//From Down to Up
     private final Pose NearPickUp3_final = new Pose(128,83.44481054365735,0);//From Down to Up
-public PathChain NearScorePreload, NearGet_Ball1, NearShoot_Ball1, HumanPlayer_Ball, NearGet_Ball2, NearShoot_Ball2, NearGet_Ball3, NearShoot_Ball3;
+    public PathChain NearScorePreload, NearGet_Ball1, NearShoot_Ball1, HumanPlayer_Ball, NearGet_Ball2, NearShoot_Ball2, NearGet_Ball3, NearShoot_Ball3;
     public PathChain FarScorePreload, FarGet_Ball1, FarShoot_Ball1,FarGet_Ball2, FarShoot_Ball2, FarGet_Ball3, FarShoot_Ball3;
     public PathChain FarEndPath, NearEndPath;
     public Follower follower;

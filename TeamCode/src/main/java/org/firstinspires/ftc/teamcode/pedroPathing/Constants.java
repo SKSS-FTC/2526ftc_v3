@@ -31,23 +31,34 @@ public class Constants {
             .rightRearMotorName("rightDown")
             .leftRearMotorName("leftDown")
             .leftFrontMotorName("leftUp")
-            .leftFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
             .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
             .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD);
     public static ThreeWheelConstants localizerConstants = new ThreeWheelConstants()
-            .leftPodY(-6)
-            .rightPodY(6)
-            .strafePodX(6)
-            .leftEncoder_HardwareMapName("rightUp")
-            .rightEncoder_HardwareMapName("leftUp")
-            .strafeEncoder_HardwareMapName("leftDown")
-            .leftEncoderDirection(Encoder.FORWARD)
+            .forwardTicksToInches(0.003)
+            .strafeTicksToInches(0.003)
+            .turnTicksToInches(-0.0014361566416410411)
+            .rightPodY(-6)
+            .leftPodY(6)
+            .strafePodX(-6)
+            .leftEncoder_HardwareMapName("shoot")
+            .rightEncoder_HardwareMapName("intake")
+            .strafeEncoder_HardwareMapName("rotate")
+            .leftEncoderDirection(Encoder.REVERSE)
             .rightEncoderDirection(Encoder.FORWARD)
-            .strafeEncoderDirection(Encoder.REVERSE)
-            .forwardTicksToInches(0.033248487652509935);
+            .strafeEncoderDirection(Encoder.REVERSE);
+    //0.12919977258751814
+    //0.2570030373084002
+    //2.364134586694955
+
+
+
 //            .strafeTicksToInches()
 //            .turnTicksToInches();
+
+    //0.12888585245496553
+    // -0.017587642567332695
 
 
 }

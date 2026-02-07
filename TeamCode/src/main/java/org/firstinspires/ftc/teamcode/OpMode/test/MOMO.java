@@ -19,8 +19,8 @@ public class MOMO extends LinearOpMode {
         rightUp = hardwareMap.get(DcMotor.class, "rightUp");
         leftDown = hardwareMap.get(DcMotor.class, "leftDown");
         rightDown = hardwareMap.get(DcMotor.class, "rightDown");
-        Intake = hardwareMap.get(DcMotor.class, "Intake");
-        Shoot = hardwareMap.get(DcMotor.class, "Shoot");
+        Intake = hardwareMap.get(DcMotor.class, "intake");
+        Shoot = hardwareMap.get(DcMotor.class, "shoot");
 
         waitForStart();
 

@@ -29,8 +29,8 @@ public class absoluteDriveTest1 extends LinearOpMode {
         rightUp = hardwareMap.get(DcMotor.class, "rightUp");
         leftDown = hardwareMap.get(DcMotor.class, "leftDown");
         rightDown = hardwareMap.get(DcMotor.class, "rightDown");
-        intake = hardwareMap.get(DcMotor.class,"Intake");
-        shoot = hardwareMap.get(DcMotor.class,"Shoot");
+        intake = hardwareMap.get(DcMotor.class,"intake");
+        shoot = hardwareMap.get(DcMotor.class,"shoot");
 
         fieldDrive = true;
 
