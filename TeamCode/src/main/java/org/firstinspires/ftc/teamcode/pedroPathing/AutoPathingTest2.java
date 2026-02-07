@@ -21,8 +21,8 @@ public class AutoPathingTest2 extends OpMode {
     boolean PathGrabShoot5 = true;
     boolean PathGrabShoot6 = true;
     private BluePath bluePath;
-    private enum NearPathState {none,NearScorePreload,NearGet_Ball1, NearShoot_Ball1, NearGet_Ball2, NearShoot_Ball2, NearGet_Ball3, NearShoot_Ball3, endPath, finish};
-    private enum FarPathState {none, FarScorePreload, FarGet_Ball1, FarShoot_Ball1, FarGet_Ball2, FarShoot_Ball2, FarGet_Ball3, FarShoot_Ball3, endPath, finish};
+    private enum NearPathState {none,NearScorePreload,NearGet_Ball1, NearShoot_Ball1, NearGet_Ball2, NearShoot_Ball2, NearGet_Ball3, NearShoot_Ball3, NearEndPath, finish};
+    private enum FarPathState {none, FarScorePreload, FarGet_Ball1, FarShoot_Ball1, FarGet_Ball2, FarShoot_Ball2, FarGet_Ball3, FarShoot_Ball3, FarEndPath, finish};
     private NearPathState currentNearPathState = NearPathState.none;
     private FarPathState currentFarPathState = FarPathState.none;
 
@@ -31,10 +31,8 @@ public class AutoPathingTest2 extends OpMode {
 
     private void determinePath(int currentPath) {
         if (opmodeTimer.getElapsedTime() >= 25000) {
-            //25000ms = 25s
-            currentNearPathState = NearPathState.endPath;
-            //25000ms = 25s
-            currentFarPathState = FarPathState.endPath;
+            currentNearPathState = NearPathState.NearEndPath;
+            currentFarPathState = FarPathState.FarEndPath;
         }
         if (currentPath == 0) {
             if (PathGrabShoot1) {
@@ -121,8 +119,8 @@ public class AutoPathingTest2 extends OpMode {
                     determinePath(3);
                 }
 
-            case endPath:
-                bluePath.follower.followPath(bluePath.EndPath);
+            case NearEndPath:
+                bluePath.follower.followPath(bluePath.NearEndPath);
                 if(!bluePath.follower.isBusy()){
                     currentNearPathState = NearPathState.finish;
                 }
@@ -179,8 +177,8 @@ public class AutoPathingTest2 extends OpMode {
                     determinePath(3);
                 }
 
-            case endPath:
-                bluePath.follower.followPath(bluePath.EndPath);
+            case FarEndPath:
+                bluePath.follower.followPath(bluePath.FarEndPath);
                 if(!bluePath.follower.isBusy()){
                     currentNearPathState = NearPathState.finish;
                 }
